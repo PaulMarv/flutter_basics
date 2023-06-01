@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'next_page/next_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,8 +15,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(debugShowCheckedModeBanner:false, 
-    home: MyAppExt(),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyAppExt(),
     );
   }
 }
@@ -30,6 +32,7 @@ class MyAppExt extends StatefulWidget {
 class _MyAppExtState extends State<MyAppExt> {
   String buttonName = 'Click';
   int currentIndex = 0;
+  bool _isClicked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +74,17 @@ class _MyAppExtState extends State<MyAppExt> {
                   ],
                 ),
               )
-            : GestureDetector(child: Image.asset('images/profile.jpg'),),
+            : GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isClicked = !_isClicked;
+                  });
+                },
+                child: _isClicked
+                    ? Image.asset('images/profile.jpg')
+                    : Image.network(
+                        'https://s.hdnux.com/photos/01/14/12/43/19966188/6/rawImage.jpg'),
+              ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -95,13 +108,3 @@ class _MyAppExtState extends State<MyAppExt> {
   }
 }
 
-class NextPage extends StatelessWidget {
-  const NextPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-    );
-  }
-}
